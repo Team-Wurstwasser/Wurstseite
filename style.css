@@ -120,4 +120,95 @@ footer {
 
 .back-link:hover {
     color: var(--primary);
+
+}
+
+/* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: var(--card-dark);
+    border-right: 3px solid var(--primary);
+    padding: 20px;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+}
+
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.nav-links a:hover {
+    background: var(--primary);
+    transform: translateX(10px);
+}
+
+/* Layout Anpassung für große Bildschirme */
+@media (min-width: 1200px) {
+    body {
+        padding-left: 250px; /* Platz für die Sidebar machen */
+    }
+}
+
+/* Mobile Toggle (Nur sichtbar wenn Bildschirm klein) */
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1001;
+    display: none;
+}
+
+@media (max-width: 1199px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .menu-toggle {
+        display: block;
+    }
+    /* Klasse zum Einblenden per JS/Klick */
+    .sidebar-open .sidebar {
+        transform: translateX(0);
+    }
 }
