@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulstundenplan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --primary: #60a5fa;
+            --primary-light: #1e3a8a;
+            --active-hour-bg: #451a03;
+            --active-hour-border: #d97706;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .week-toggle {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .week-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .week-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: var(--primary-light);
+            color: var(--text-main);
+            font-weight: 600;
+            padding: 14px 10px;
+        }
+
+        .time-col {
+            width: 130px;
+            background-color: var(--card-bg);
+        }
+
+        .period-number {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .period-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .lesson-box {
+            background-color: var(--bg-color);
+            border-radius: 6px;
+            padding: 8px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            min-height: 52px;
+            border: 1px solid transparent;
+        }
+
+        .subject {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .room {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .multi-group {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .multi-group .lesson-box {
+            flex: 1;
+            padding: 6px 4px;
+        }
+
+        .multi-group .subject {
+            font-size: 0.85rem;
+        }
+
+        tr.active-period {
+            background-color: var(--active-hour-bg) !important;
+        }
+        
+        tr.active-period td {
+            border-top: 2px solid var(--active-hour-border);
+            border-bottom: 2px solid var(--active-hour-border);
+        }
+
+        tr.active-period .time-col {
+            border-left: 4px solid var(--active-hour-border);
+        }
+
+        .alternating {
+            border: 1px dashed var(--primary);
+            position: relative;
+        }
+        .alternating::after {
+            content: 'A/B';
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: 0.6rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            header { flex-direction: column; align-items: stretch; }
+            .controls { justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Stundenplan</h1>
+            <p id="current-info" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;"></p>
+        </div>
+        <div class="controls">
+            <div class="week-toggle">
+                <button class="week-btn active" id="btn-week-a" onclick="setWeek('A')">Woche A (Physik)</button>
+                <button class="week-btn" id="btn-week-b" onclick="setWeek('B')">Woche B (Mathe)</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">Stunde</th>
+                    <th>Montag</th>
+                    <th>Dienstag</th>
+                    <th>Mittwoch</th>
+                    <th>Donnerstag</th>
+                    <th>Freitag</th>
+                </tr>
+            </thead>
+            <tbody id="timetable-body">
+                <!-- Data populated dynamically by JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let currentWeek = 'A';
+
+    const blocks = [
+        { num: "1. - 2. Std.", start: "07:35", end: "09:05", periods: [0, 1] },
+        { num: "3. - 4. Std.", start: "09:30", end: "11:00", periods: [2, 3] },
+        { num: "5. - 6. Std.", start: "11:20", end: "12:50", periods: [4, 5] },
+        { num: "7. Std.", start: "13:00", end: "13:45", periods: [6] },
+        { num: "8. - 9. Std.", start: "13:50", end: "15:20", periods: [7, 8] },
+        { num: "10. - 11. Std.", start: "15:30", end: "17:00", periods: [9, 10] }
+    ];
+
+    const rawSchedule = {
+        0: [ null, { s: "D gAN", r: "428" }, { s: "Englisch", r: "415" }, null, null ],
+        1: [ null, { s: "D gAN", r: "428" }, { s: "Englisch", r: "415" }, null, null ],
+        2: [ { s: "Englisch", r: "427" }, "ALT_3_4", null, { s: "PH TG", r: "221" }, { s: "M eAN", r: "436" } ],
+        3: [ { s: "Englisch", r: "427" }, "ALT_3_4", { s: "Gesch.", r: "415" }, { s: "PH TG", r: "221" }, { s: "M eAN", r: "436" } ],
+        4: [ null, { s: "INF TG", r: "318" }, { s: "M eAN", r: "321" }, { s: "IT", r: "114" }, { s: "D gAN", r: "323" } ],
+        5: [ null, { s: "INF TG", r: "318" }, { s: "M eAN", r: "321" }, { s: "IT", r: "114" }, { s: "D gAN", r: "323" } ],
+        6: [ null, null, null, null, null ],
+        7: [ { s: "IT", r: "424" }, { s: "IT", r: "316" }, { s: "PH-LAB", r: "212" }, null, null ],
+        8: [ { s: "IT", r: "424" }, { s: "IT", r: "316" }, { s: "PH-LAB", r: "212" }, null, null ],
+        9: [ null, { s: "Sport", r: "SH1" }, { s: "RelEv", r: "436" }, null, null ],
+        10: [ null, { s: "Sport", r: "SH1" }, { s: "RelEv", r: "436" }, null, null ]
+    };
+
+    function parseTimeToMinutes(timeStr) {
+        const [hours, minutes] = timeStr.split(':').map(Number);
+        return hours * 60 + minutes;
+    }
+
+    function renderCellContent(data) {
+        if (!data) return '';
+
+        if (data === "ALT_3_4") {
+            if (currentWeek === 'A') {
+                return `
+                    <div class="multi-group alternating">
+                        <div class="lesson-box"><span class="subject">PH TG</span><span class="room">Raum 222</span></div>
+                    </div>`;
+            } else {
+                return `
+                    <div class="lesson-box alternating">
+                        <span class="subject">M gAN</span>
+                        <span class="room">Raum 436</span>
+                    </div>`;
+            }
+        }
+
+        if (Array.isArray(data)) {
+            return `
+                <div class="multi-group">
+                    ${data.map(item => `
+                        <div class="lesson-box">
+                            <span class="subject">${item.s}</span>
+                            <span class="room">R. ${item.r}</span>
+                        </div>
+                    `).join('')}
+                </div>`;
+        }
+
+        return `
+            <div class="lesson-box">
+                <span class="subject">${data.s}</span>
+                <span class="room">Raum ${data.r}</span>
+            </div>`;
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('timetable-body');
+        tbody.innerHTML = '';
+
+        const now = new Date();
+        const jsDay = now.getDay(); 
+        const currentDayIndex = jsDay === 0 ? -1 : jsDay - 1; // 0 = Mo, 4 = Fr
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+        // Aktive Stunde oder kommende Stunde in der Pause ermitteln
+        let activeBlockIndex = -1;
+        if (currentDayIndex >= 0 && currentDayIndex <= 4) {
+            for (let i = 0; i < blocks.length; i++) {
+                const startMin = parseTimeToMinutes(blocks[i].start);
+                const endMin = parseTimeToMinutes(blocks[i].end);
+                const nextStartMin = (i < blocks.length - 1) ? parseTimeToMinutes(blocks[i+1].start) : Infinity;
+
+                // 1. Direkt während der Stunde
+                if (currentMinutes >= startMin && currentMinutes <= endMin) {
+                    activeBlockIndex = i;
+                    break;
+                }
+                // 2. Während der Pause zur nächsten Stunde (z.B. 11:01 - 11:19)
+                if (currentMinutes > endMin && currentMinutes < nextStartMin) {
+                    activeBlockIndex = i + 1;
+                    break;
+                }
+            }
+        }
+
+        blocks.forEach((block, index) => {
+            const tr = document.createElement('tr');
+
+            if (index === activeBlockIndex) {
+                tr.classList.add('active-period');
+            }
+
+            let html = `
+                <td class="time-col">
+                    <div class="period-number">${block.num}</div>
+                    <div class="period-time">${block.start} - ${block.end}</div>
+                </td>
+            `;
+
+            for (let day = 0; day < 5; day++) {
+                const p1 = rawSchedule[block.periods[0]] ? rawSchedule[block.periods[0]][day] : null;
+                const p2 = block.periods.length > 1 && rawSchedule[block.periods[1]] ? rawSchedule[block.periods[1]][day] : null;
+
+                if (block.periods.length > 1 && JSON.stringify(p1) !== JSON.stringify(p2)) {
+                    html += `
+                        <td>
+                            <div style="display: flex; flex-direction: column; gap: 4px; height: 100%;">
+                                <div style="flex: 1;">${renderCellContent(p1)}</div>
+                                <div style="flex: 1;">${renderCellContent(p2)}</div>
+                            </div>
+                        </td>`;
+                } else {
+                    html += `<td>${renderCellContent(p1)}</td>`;
+                }
+            }
+
+            tr.innerHTML = html;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function setWeek(week) {
+        currentWeek = week;
+        document.getElementById('btn-week-a').classList.toggle('active', week === 'A');
+        document.getElementById('btn-week-b').classList.toggle('active', week === 'B');
+        renderTable();
+    }
+
+    function getWeekNumber(d) {
+        d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+        var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+        return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    }
+
+    const kw = getWeekNumber(new Date());
+    const initialWeek = (kw % 2 === 0) ? 'B' : 'A';
+    setWeek(initialWeek);
+
+    document.getElementById('current-info').innerText = `Aktuelle Kalenderwoche: KW ${kw} (Automatisch Woche ${initialWeek} gewählt)`;
+
+    setInterval(renderTable, 60000);
+</script>
+
+</body>
+</html>
