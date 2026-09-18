@@ -252,7 +252,7 @@ function startCounter(){
             player.size=100;
             clearInterval(counterInterval);
             alert("Zeit überlebt: "+gameState.counter+" Sekunden");
-            window.location.href="games/matheliebsch.html";
+            window.location.href="/games/matheliebsch.html";
         }
     },1000);
 
