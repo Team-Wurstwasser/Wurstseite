@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Ein einfacher IP-Converter zum Übersetzen zwischen binärer und dezimaler IP-Adresse.">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://team-wurstwasser.com/img/Logo.png">
+        <link rel="canonical" href="https://team-wurstwasser.com/random-stuff/ip-converter.html">
+        <title>IP-Converter | Team Wurstwasser</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <link rel="icon" type="image/png" sizes="256x256" href="/img/Logo.png">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/random-stuff/horoskop.css">
+        <script src="/js/setup.js" defer></script>
+        <script src="/js/random-stuff/horoskop.js" defer></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>Horoskop</h1>
+            <p class="motto">Du fragst dich wie deine Zukunft aussieht? Hier bist du richtig!</p>
+        </header>
+
+            <main>
+        <div class="container horoscope-container">
+            <a class="back-link" href="/random-stuff.html">← Zurück zur Random-Stuff-Seite</a>
+
+            <section class="card horoscope-card" aria-labelledby="horoscope-title">
+                <div class="intro">
+                    <p class="eyebrow">✦ Dein Blick in die Sterne</p>
+                    <h2 id="horoscope-title">Dein Horoskop entdecken</h2>
+                    <p>Wähle dein Sternzeichen und den gewünschten Zeitraum aus.</p>
+                </div>
+
+                <form id="horoscope-form">
+                    <fieldset class="sign-fieldset">
+                        <legend>1. Wähle dein Sternzeichen</legend>
+                        <div class="sign-grid" id="sign-grid">
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="aries" checked>
+                                <span class="sign-tile"><span class="sign-symbol">♈</span><span class="sign-name">Widder</span><span class="sign-dates">21.03.–19.04.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="taurus">
+                                <span class="sign-tile"><span class="sign-symbol">♉</span><span class="sign-name">Stier</span><span class="sign-dates">20.04.–20.05.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="gemini">
+                                <span class="sign-tile"><span class="sign-symbol">♊</span><span class="sign-name">Zwillinge</span><span class="sign-dates">21.05.–20.06.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="cancer">
+                                <span class="sign-tile"><span class="sign-symbol">♋</span><span class="sign-name">Krebs</span><span class="sign-dates">21.06.–22.07.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="leo">
+                                <span class="sign-tile"><span class="sign-symbol">♌</span><span class="sign-name">Löwe</span><span class="sign-dates">23.07.–22.08.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="virgo">
+                                <span class="sign-tile"><span class="sign-symbol">♍</span><span class="sign-name">Jungfrau</span><span class="sign-dates">23.08.–22.09.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="libra">
+                                <span class="sign-tile"><span class="sign-symbol">♎</span><span class="sign-name">Waage</span><span class="sign-dates">23.09.–22.10.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="scorpio">
+                                <span class="sign-tile"><span class="sign-symbol">♏</span><span class="sign-name">Skorpion</span><span class="sign-dates">23.10.–21.11.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="sagittarius">
+                                <span class="sign-tile"><span class="sign-symbol">♐</span><span class="sign-name">Schütze</span><span class="sign-dates">22.11.–21.12.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="capricorn">
+                                <span class="sign-tile"><span class="sign-symbol">♑</span><span class="sign-name">Steinbock</span><span class="sign-dates">22.12.–19.01.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="aquarius">
+                                <span class="sign-tile"><span class="sign-symbol">♒</span><span class="sign-name">Wassermann</span><span class="sign-dates">20.01.–18.02.</span></span>
+                            </label>
+                            <label class="sign-option">
+                                <input type="radio" name="sign" value="pisces">
+                                <span class="sign-tile"><span class="sign-symbol">♓</span><span class="sign-name">Fische</span><span class="sign-dates">19.02.–20.03.</span></span>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="period-fieldset">
+                        <legend>2. Zeitraum auswählen</legend>
+                        <div class="period-options">
+                            <label><input type="radio" name="period" value="daily" checked><span>☀️ Tageshoroskop</span></label>
+                            <label><input type="radio" name="period" value="weekly"><span>🌙 Wochenhoroskop</span></label>
+                            <label><input type="radio" name="period" value="monthly"><span>✦ Monatshoroskop</span></label>
+                        </div>
+                    </fieldset>
+
+                    <button class="horoscope-submit" id="horoscope-submit" type="submit">
+                        <span aria-hidden="true">✦</span> Horoskop anzeigen
+                    </button>
+                </form>
+
+                <section id="horoscope-result" class="horoscope-result" aria-live="polite" aria-atomic="true" hidden>
+                    <div class="result-divider"><span>✦</span></div>
+                    <p class="result-kicker" id="result-period"></p>
+                    <h2 id="result-heading"></h2>
+                    <p class="result-date" id="result-date"></p>
+                    <div class="result-copy" id="result-copy"></div>
+                    <div id="result-sections" class="result-sections"></div>
+                    <p class="api-attribution hidden" id="api-attribution"></p>
+                </section>
+                <p id="horoscope-status" class="horoscope-status" role="status" hidden></p>
+            </section>
+        </div>
+    </main>
+
+    </body>
+</html>

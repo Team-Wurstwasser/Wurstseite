@@ -1,0 +1,102 @@
+:root {
+    --horoscope-ink: #f8f2e8;
+    --horoscope-muted: #c5b9d1;
+    --horoscope-gold: #e5c17b;
+    --horoscope-violet: #211a36;
+    --horoscope-card: #2a2142;
+    --horoscope-line: rgba(229, 193, 123, 0.24);
+}
+
+.horoscope-container { max-width: 1000px; margin-inline: auto; }
+.horoscope-card {
+    color: var(--horoscope-ink);
+    background: radial-gradient(ellipse at top, #40305c 0%, #29213f 48%, #211a36 100%);
+    border: 1px solid var(--horoscope-line);
+    border-radius: 22px;
+    padding: clamp(1.1rem, 4vw, 2.5rem);
+    box-shadow: 0 18px 55px rgba(13, 8, 25, .24);
+}
+.intro { text-align: center; margin: 0 auto 2rem; max-width: 620px; }
+.intro h2 { margin: .35rem 0 .6rem; font-size: clamp(1.65rem, 4vw, 2.35rem); }
+.intro p:not(.eyebrow) { color: var(--horoscope-muted); margin-bottom: 0; }
+.eyebrow, .result-kicker {
+    color: var(--horoscope-gold); text-transform: uppercase; letter-spacing: .18em;
+    font-size: .76rem; font-weight: 700;
+}
+.sign-fieldset, .period-fieldset { border: 0; padding: 0; margin: 0 0 2rem; min-width: 0; }
+.sign-fieldset legend, .period-fieldset legend { font-weight: 700; margin-bottom: 1rem; font-size: 1.05rem; }
+.sign-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; }
+.sign-option { display: block; cursor: pointer; min-width: 0; }
+.sign-option input, .period-options input {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.sign-tile {
+    display: flex; min-height: 115px; height: 100%; box-sizing: border-box;
+    align-items: center; justify-content: center; flex-direction: column; gap: .22rem;
+    padding: .8rem .35rem; border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px; background: rgba(255,255,255,.035); text-align: center;
+    transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.sign-option:hover .sign-tile { border-color: var(--horoscope-gold); transform: translateY(-2px); }
+.sign-option input:checked + .sign-tile {
+    border-color: var(--horoscope-gold); background: rgba(229,193,123,.14);
+    box-shadow: inset 0 0 0 1px var(--horoscope-gold);
+}
+.sign-option input:focus-visible + .sign-tile, .period-options input:focus-visible + span {
+    outline: 3px solid #fff; outline-offset: 3px;
+}
+.sign-symbol { color: var(--horoscope-gold); font-size: 1.9rem; line-height: 1.2; }
+.sign-name { font-weight: 700; font-size: .94rem; }
+.sign-dates { color: var(--horoscope-muted); font-size: .72rem; }
+.period-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; }
+.period-options label { cursor: pointer; }
+.period-options label span {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    min-height: 52px; padding: .6rem; box-sizing: border-box; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.035);
+    font-weight: 600; font-size: .9rem;
+}
+.period-options input:checked + span {
+    border-color: var(--horoscope-gold); background: rgba(229,193,123,.14);
+}
+.horoscope-submit {
+    display: flex; align-items: center; justify-content: center; gap: .6rem;
+    width: 100%; min-height: 54px; padding: .9rem 1.25rem; border: 0;
+    border-radius: 13px; background: var(--horoscope-gold); color: #211a36;
+    font: inherit; font-weight: 800; cursor: pointer; transition: filter .18s ease, transform .18s ease;
+}
+.horoscope-submit:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.horoscope-submit:disabled { opacity: .65; cursor: wait; transform: none; }
+.horoscope-result { margin-top: 2rem; padding-top: .2rem; }
+.result-divider { display: flex; align-items: center; gap: 1rem; color: var(--horoscope-gold); }
+.result-divider::before, .result-divider::after { content: ""; flex: 1; height: 1px; background: var(--horoscope-line); }
+.result-kicker { margin: 1.5rem 0 .4rem; }
+.horoscope-result h2 { margin: .2rem 0 .5rem; font-size: clamp(1.6rem, 4vw, 2.2rem); }
+.result-date { color: var(--horoscope-muted); font-size: .9rem; }
+.result-copy { line-height: 1.8; font-size: 1.02rem; overflow-wrap: anywhere; }
+.result-copy p { margin: 0 0 1rem; }
+.result-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin-top: 1.3rem; }
+.result-section { padding: 1rem; border: 1px solid var(--horoscope-line); border-radius: 12px; background: rgba(255,255,255,.035); }
+.result-section h3 { color: var(--horoscope-gold); margin: 0 0 .45rem; font-size: 1rem; }
+.result-section p { margin: 0; line-height: 1.65; }
+.api-attribution { margin-top: 1.5rem; font-size: .84rem; color: var(--horoscope-muted); }
+.api-attribution a { color: var(--horoscope-gold); }
+.horoscope-status { margin: 1rem 0 0; padding: .9rem 1rem; border-radius: 10px; background: rgba(255,255,255,.07); }
+.horoscope-status.is-error { border: 1px solid #e69a9a; color: #ffe0e0; }
+.horoscope-status.is-loading { color: var(--horoscope-muted); }
+[hidden] { display: none !important; }
+
+@media (max-width: 700px) {
+    .sign-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+    .sign-tile { min-height: 105px; }
+    .period-options { grid-template-columns: 1fr; }
+    .period-options label span { justify-content: flex-start; padding-inline: 1rem; }
+    .result-sections { grid-template-columns: 1fr; }
+}
+@media (max-width: 390px) {
+    .sign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sign-tile, .horoscope-submit { transition: none; }
+}
