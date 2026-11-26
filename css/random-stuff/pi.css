@@ -88,14 +88,14 @@
     box-sizing: border-box;
 }
 
-/* Verbundene Gruppe aus Suchbegriff-Feld und Button */
 .pi-input-group {
     display: flex;
     align-items: stretch;
     height: 42px;
 }
 
-.pi-input-group input {
+.pi-input-group input,
+.pi-input-group select {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-right: none;
