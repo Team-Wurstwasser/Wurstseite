@@ -1,6 +1,5 @@
 const API_BASE = "https://api.pi.delivery/v1/pi";
 
-// --- MODUS-WECHSEL ---
 const modeButtons = document.querySelectorAll(".pi-mode-btn");
 const modePanels = {
     scroll: document.getElementById("mode-scroll"),
@@ -32,7 +31,6 @@ modeButtons.forEach((btn) => {
     btn.addEventListener("click", () => setMode(btn.dataset.mode));
 });
 
-// --- MODUS 1: AUTO-SCROLL ---
 const display = document.getElementById("pi-display");
 const batchSize = 500;
 let currentDigit = 0;
@@ -82,7 +80,6 @@ function checkAutoFill() {
 window.addEventListener("scroll", checkAutoFill);
 fetchPi();
 
-// --- MODUS 2: DIREKTABFRAGE (1, 10 oder 100 Stellen) ---
 const lookupForm = document.getElementById("lookup-form");
 const lookupPosInput = document.getElementById("lookup-pos");
 const lookupCountSelect = document.getElementById("lookup-count");
@@ -101,7 +98,7 @@ lookupForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const pos = Math.max(1, Math.floor(Number(lookupPosInput.value)));
     const count = Number(lookupCountSelect.value);
-    const start = pos - 1;
+    const start = pos;
 
     lookupBtn.disabled = true;
     lookupResult.textContent = "Frage API ab…";
@@ -121,7 +118,6 @@ lookupForm?.addEventListener("submit", async (e) => {
     }
 });
 
-// --- MODUS 3: SUCHE ÜBER STATISCHE TXT-DATEIEN (NUR IM RAM) ---
 const STATIC_FILES = {
     1_000_000: "/random-stuff/pi/decimals/pi-1m.txt",
     10_000_000: "/random-stuff/pi/decimals/pi-10m.txt",
@@ -131,7 +127,6 @@ const STATIC_FILES = {
 const SCOPE_100M = 100_000_000;
 const UNLOCK_CODE = "42";
 
-// Nur im flüchtigen JS-Speicher (nach Reload alles weg)
 let ramDigits = "";
 let ramLoadedScope = 0;
 let is100mUnlocked = false;
