@@ -1,0 +1,36 @@
+:root{
+  --bg:#0a0e13; --panel:#0f161e; --line:#2b4a63; --text:#d8e6f0;
+  --dim:#6f8799; --amber:#ffb000; --red:#ff5a5a;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Cascadia Mono","SF Mono",Consolas,Menlo,"DejaVu Sans Mono",monospace}
+body{display:flex;justify-content:center;padding:16px;min-height:100vh}
+main{width:100%;max-width:860px}
+.screen{border:2px solid var(--line);background:var(--panel);padding:22px;text-align:center}
+h1{margin:0 0 4px;color:var(--amber);letter-spacing:.4em;font-size:clamp(1rem,4.2vw,1.7rem);font-weight:700}
+h2{margin:0 0 4px;color:var(--amber);letter-spacing:.3em;font-size:clamp(.95rem,3.4vw,1.35rem)}
+.sub{margin:0 0 14px;color:var(--dim);font-size:.85rem}
+pre.art{display:inline-block;text-align:left;margin:8px 0;overflow-x:auto;max-width:100%;
+  font-size:clamp(6px,2.2vw,13px);line-height:1.15;color:#8fd3ff}
+pre.boom{color:#ff9a4d;font-size:clamp(6px,2.4vw,13px)}
+.list{list-style:none;margin:14px auto;padding:0;max-width:420px;text-align:left}
+.list li{padding:8px 12px;cursor:pointer;border:1px solid transparent}
+.list li::before{content:"  ";white-space:pre}
+.list li.sel{color:var(--amber);border-color:var(--line)}
+.list li.sel::before{content:"> "}
+.list li.active{color:var(--red)}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+button{font:inherit;color:var(--text);background:transparent;border:1px solid var(--line);
+  padding:9px 16px;cursor:pointer}
+button:hover,button:focus-visible{border-color:var(--amber);color:var(--amber);outline:none}
+.hint{color:var(--dim);font-size:.8rem;margin:10px 0 0}
+canvas{display:block;width:100%;height:auto;background:#05080b;border:2px solid var(--line)}
+#hud{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:1rem}
+#hudLeben{color:var(--red)} #hudLeben i{font-style:normal;color:#3a2a2e}
+.scores{max-width:480px;margin:14px auto;max-height:50vh;overflow-y:auto;text-align:left}
+.scores div{display:flex;justify-content:space-between;gap:12px;padding:5px 10px;border-bottom:1px dotted var(--line)}
+input{font:inherit;color:var(--text);background:#05080b;border:1px solid var(--line);padding:9px 12px;width:min(100%,300px)}
+input:focus{outline:none;border-color:var(--amber)}
+.err{color:var(--red);min-height:1.2em;margin:6px 0 0;font-size:.85rem}
