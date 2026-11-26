@@ -125,7 +125,7 @@ const STATIC_FILES = {
 };
 
 const SCOPE_100M = 100_000_000;
-const UNLOCK_CODE = "42";
+const UNLOCK_CODE = "11037";
 
 let ramDigits = "";
 let ramLoadedScope = 0;
@@ -150,7 +150,7 @@ function updateScopeUI() {
     const selectedScope = Number(searchScopeSelect.value);
 
     if (mobileWarning) {
-        mobileWarning.hidden = selectedScope !== 10_000_000;
+        mobileWarning.hidden = !(selectedScope === 10_000_000 || selectedScope === SCOPE_100M);
     }
 
     if (passwordBox) {
@@ -166,7 +166,7 @@ function updateScopeUI() {
         searchStatus.textContent = "100M ist passwortgeschützt.";
     } else {
         searchStatus.textContent =
-            `Ausgewählt: ${(selectedScope / 1_000_000).toFixed(0)}M Stellen (wird erst beim Suchen in den RAM geladen).`;
+            `Ausgewählt: ${(selectedScope / 1_000_000).toFixed(0)}M Stellen`;
     }
 }
 

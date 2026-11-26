@@ -26,35 +26,29 @@
         <div class="container">
             <a class="back-link" href="/random-stuff.html">← Zurück zur Random-Stuff Seite</a>
 
-            <!-- Modus-Auswahlmenü -->
             <section class="card pi-mode-card">
                 <div class="pi-mode-menu" role="tablist" aria-label="Modus auswählen">
                     <button type="button" class="pi-mode-btn active" data-mode="scroll" role="tab" aria-selected="true">
-                        Scrollen (Auto-Load)
+                        Scrollen
                     </button>
                     <button type="button" class="pi-mode-btn" data-mode="lookup" role="tab" aria-selected="false">
                         Stellen abfragen
                     </button>
                     <button type="button" class="pi-mode-btn" data-mode="search" role="tab" aria-selected="false">
-                        Suche (1M / 10M / 100M)
+                        Suche
                     </button>
                 </div>
             </section>
 
-            <!-- MODUS 1: Scrollen -->
             <div id="mode-scroll" class="pi-mode-panel pi-list">
                 <section class="card">
                     <div id="pi-display"></div>
                 </section>
             </div>
 
-            <!-- MODUS 2: Gezielte Stellenabfrage -->
             <div id="mode-lookup" class="pi-mode-panel" hidden>
                 <section class="card">
                     <h2>Stellen gezielt abfragen</h2>
-                    <p class="pi-muted">
-                        Ruft ab einer beliebigen Nachkommastelle (1 = erste Stelle nach dem Komma) die nächsten 1, 10 oder 100 Stellen ab.
-                    </p>
 
                     <form id="lookup-form" class="pi-form-row">
                         <div class="pi-field">
@@ -81,24 +75,19 @@
                 </section>
             </div>
 
-            <!-- MODUS 3: Lokale Suche über statische TXT-Dateien (nur im RAM) -->
             <div id="mode-search" class="pi-mode-panel" hidden>
                 <section class="card">
                     <h2>Ziffernfolge suchen</h2>
-                    <p class="pi-muted">
-                        Lädt die gewählte Datei nur temporär in deinen Arbeitsspeicher (nach Neuladen der Seite wird erneut geladen).
-                    </p>
 
                     <form id="search-form" class="pi-form-row">
                         <div class="pi-field">
                             <label for="search-scope">Suchbereich</label>
                             <select id="search-scope">
-                                <option value="1000000" selected>1M (pi-1m.txt)</option>
-                                <option value="10000000">10M (pi-10m.txt)</option>
-                                <option value="100000000">100M (pi-100m.txt)</option>
+                                <option value="1000000" selected>1 Millionen</option>
+                                <option value="10000000">10 Millionen</option>
+                                <option value="100000000">100 Millionen</option>
                             </select>
 
-                            <!-- Kleines PW-Feld direkt unter dem 100M-Bereich -->
                             <div id="password-box" class="pi-pw-inline" hidden>
                                 <input id="scope-password" type="password" placeholder="PW für 100M" autocomplete="off">
                                 <button type="button" class="pi-btn pi-btn-sm" id="unlock-btn">OK</button>
@@ -115,9 +104,8 @@
                         </div>
                     </form>
 
-                    <!-- Warnung bei 10M -->
                     <div id="mobile-warning" class="pi-warning" role="alert" hidden>
-                        ⚠️ <strong>Hinweis:</strong> Bitte wähle <strong>10M</strong> nicht mit mobilen Daten.
+                        ⚠️ <strong>Achtung:</strong> Hoher Daten und RAM-Verbrauch! Auf Mobilgeräten kann es zu Problemen kommen. Bitte nur auf Desktop-PCs verwenden.
                     </div>
 
                     <div id="progress-wrap" class="pi-progress-wrap" hidden>
@@ -126,7 +114,7 @@
                     </div>
 
                     <div id="search-status" class="pi-output" aria-live="polite">
-                        Noch nichts im Arbeitsspeicher geladen.
+                        Noch nichts geladen.
                     </div>
 
                     <ul id="search-results" class="pi-match-list"></ul>
