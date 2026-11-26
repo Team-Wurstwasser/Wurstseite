@@ -1,37 +1,137 @@
 <!DOCTYPE html>
-<html lang="de">   
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Die ersten 100 Billionen Nachkommastellen von Pi">
-        <meta property="og:type" content="website">
-        <meta property="og:image" content="https://team-wurstwasser.com/img/Logo.png">
-        <link rel="canonical" href="https://team-wurstwasser.com/random-stuff/pi.html">
-        <title>Pi | Team Wurstwasser</title>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico">
-        <link rel="icon" type="image/png" sizes="256x256" href="/img/Logo.png">
-        <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="/css/random-stuff/pi.css">
-        <script src="/js/setup.js" defer></script>
-        <script src="/js/random-stuff/pi.js" defer></script>
-    </head>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Die ersten 100 Billionen Nachkommastellen von Pi">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://team-wurstwasser.com/img/Logo.png">
+    <link rel="canonical" href="https://team-wurstwasser.com/random-stuff/pi.html">
+    <title>Pi | Team Wurstwasser</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="256x256" href="/img/Logo.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/random-stuff/pi.css">
+    <script src="/js/setup.js" defer></script>
+    <script src="/js/random-stuff/pi.js" defer></script>
+</head>
 
-    <body>
-        <header>
-            <h1>Pi</h1>
-            <p class="motto">Die ersten 100 Billionen Nachkommastellen:</p>
-        </header>
+<body>
+    <header>
+        <h1>Pi</h1>
+        <p class="motto">Die ersten 100 Billionen Nachkommastellen:</p>
+    </header>
 
-        <main>
-            <div class="container">
-                <a class="back-link" href="/random-stuff.html">← Zurück zur Random-Stuff Seite</a>
+    <main>
+        <div class="container">
+            <a class="back-link" href="/random-stuff.html">← Zurück zur Random-Stuff Seite</a>
 
-                <div class="pi-list">
-                    <section class="card">
-                        <div id="pi-display"></div>
-                    </section>
+            <!-- Modus-Auswahlmenü -->
+            <section class="card pi-mode-card">
+                <div class="pi-mode-menu" role="tablist" aria-label="Modus auswählen">
+                    <button type="button" class="pi-mode-btn active" data-mode="scroll" role="tab" aria-selected="true">
+                        Scrollen (Auto-Load)
+                    </button>
+                    <button type="button" class="pi-mode-btn" data-mode="lookup" role="tab" aria-selected="false">
+                        Stellen abfragen
+                    </button>
+                    <button type="button" class="pi-mode-btn" data-mode="search" role="tab" aria-selected="false">
+                        Suche (1M / 10M / 100M)
+                    </button>
                 </div>
+            </section>
+
+            <!-- MODUS 1: Scrollen -->
+            <div id="mode-scroll" class="pi-mode-panel pi-list">
+                <section class="card">
+                    <div id="pi-display"></div>
+                </section>
             </div>
-        </main>
-    </body>
+
+            <!-- MODUS 2: Gezielte Stellenabfrage -->
+            <div id="mode-lookup" class="pi-mode-panel" hidden>
+                <section class="card">
+                    <h2>Stellen gezielt abfragen</h2>
+                    <p class="pi-muted">
+                        Ruft ab einer beliebigen Nachkommastelle (1 = erste Stelle nach dem Komma) die nächsten 1, 10 oder 100 Stellen ab.
+                    </p>
+
+                    <form id="lookup-form" class="pi-form-row">
+                        <div class="pi-field">
+                            <label for="lookup-pos">Ab Nachkommastelle</label>
+                            <input id="lookup-pos" type="number" min="1" max="100000000000000" value="1" required>
+                        </div>
+
+                        <div class="pi-field">
+                            <label for="lookup-count">Anzahl</label>
+                            <select id="lookup-count">
+                                <option value="1">1 Stelle</option>
+                                <option value="10" selected>10 Stellen</option>
+                                <option value="100">100 Stellen</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="pi-btn" id="lookup-btn">Abfragen</button>
+                    </form>
+
+                    <div id="lookup-result" class="pi-output" aria-live="polite">
+                        Noch keine Abfrage gestartet.
+                    </div>
+                </section>
+            </div>
+
+            <!-- MODUS 3: Lokale Suche über statische TXT-Dateien (nur im RAM) -->
+            <div id="mode-search" class="pi-mode-panel" hidden>
+                <section class="card">
+                    <h2>Ziffernfolge suchen</h2>
+                    <p class="pi-muted">
+                        Lädt die gewählte Datei nur temporär in deinen Arbeitsspeicher (nach Neuladen der Seite wird erneut geladen).
+                    </p>
+
+                    <form id="search-form" class="pi-form-row">
+                        <div class="pi-field">
+                            <label for="search-scope">Suchbereich</label>
+                            <select id="search-scope">
+                                <option value="1000000" selected>1M (pi-1m.txt)</option>
+                                <option value="10000000">10M (pi-10m.txt)</option>
+                                <option value="100000000">100M (pi-100m.txt)</option>
+                            </select>
+
+                            <!-- Kleines PW-Feld direkt unter dem 100M-Bereich -->
+                            <div id="password-box" class="pi-pw-inline" hidden>
+                                <input id="scope-password" type="password" placeholder="PW für 100M" autocomplete="off">
+                                <button type="button" class="pi-btn pi-btn-sm" id="unlock-btn">OK</button>
+                                <span id="password-feedback" class="pi-feedback" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <div class="pi-field">
+                            <label for="search-query">Suchbegriff (Ziffern)</label>
+                            <div class="pi-input-group">
+                                <input id="search-query" type="text" inputmode="numeric" pattern="[0-9]+" placeholder="z. B. 141592" required>
+                                <button type="submit" class="pi-btn" id="search-btn">Laden &amp; Suchen</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Warnung bei 10M -->
+                    <div id="mobile-warning" class="pi-warning" role="alert" hidden>
+                        ⚠️ <strong>Hinweis:</strong> Bitte wähle <strong>10M</strong> nicht mit mobilen Daten.
+                    </div>
+
+                    <div id="progress-wrap" class="pi-progress-wrap" hidden>
+                        <progress id="load-progress" value="0" max="1000000"></progress>
+                        <div id="progress-text" class="pi-muted">0 / 1.000.000 Stellen geladen</div>
+                    </div>
+
+                    <div id="search-status" class="pi-output" aria-live="polite">
+                        Noch nichts im Arbeitsspeicher geladen.
+                    </div>
+
+                    <ul id="search-results" class="pi-match-list"></ul>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
 </html>
