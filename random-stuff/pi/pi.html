@@ -64,14 +64,15 @@
 
                         <div class="pi-field">
                             <label for="lookup-count">Anzahl</label>
-                            <select id="lookup-count">
-                                <option value="1">1 Stelle</option>
-                                <option value="10" selected>10 Stellen</option>
-                                <option value="100">100 Stellen</option>
-                            </select>
+                            <div class="pi-input-group">
+                                <select id="lookup-count">
+                                    <option value="1">1 Stelle</option>
+                                    <option value="10" selected>10 Stellen</option>
+                                    <option value="100">100 Stellen</option>
+                                </select>
+                                <button type="submit" class="pi-btn" id="lookup-btn">Abfragen</button>
+                            </div>
                         </div>
-
-                        <button type="submit" class="pi-btn" id="lookup-btn">Abfragen</button>
                     </form>
 
                     <div id="lookup-result" class="pi-output" aria-live="polite">
