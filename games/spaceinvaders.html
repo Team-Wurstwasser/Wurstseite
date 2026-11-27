@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head> 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Spaceinvader-Clone als Webspiel.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://team-wurstwasser.com/games/spaceinvaders.html">
+<title>Space Invaders</title>
+<link rel="stylesheet" href="https://team-wurstwasser.com/games/spaceinvaders.css">
+<script src="/js/games/spaceinvaders.js" defer></script>
+</head>
+<body>
+<main>
+
+<!-- Hauptmenü -->
+<section class="screen" id="screen-menu">
+  <h1>SPACE INVADERS</h1>
+  <p class="sub">Von Sebi608 und Docktorenils</p>
+<pre class="art">       @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @
+      [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*]
+      \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/
+
+       ###           ###           ###           ###
+      #####         #####         #####         #####
+
+                            /\
+                           /  \
+                          | || |
+                          | || |
+                         /|_||_|\
+                        /_|_||_|_\
+                       |__________|
+                         |  ||  |
+                         |__||__|
+                           /__\</pre>
+  <div class="btns">
+    <button id="btnStart">Spiel starten (Enter)</button>
+    <button id="btnOptions">Optionen (O)</button>
+  </div>
+</section>
+
+<!-- Optionen -->
+<section class="screen" id="screen-options" hidden>
+  <h2>OPTIONEN</h2>
+  <p class="sub">Wähle mit ↑ ↓ und Enter, oder klicke eine Option an</p>
+  <ul class="list" id="optList"></ul>
+  <p class="hint">Esc: zurück zum Hauptmenü</p>
+</section>
+
+<!-- Schwierigkeit -->
+<section class="screen" id="screen-diff" hidden>
+  <h2>GAME DIFFICULTY</h2>
+  <p class="sub">Die aktive Stufe ist rot markiert</p>
+  <ul class="list" id="diffList"></ul>
+  <p class="hint">Esc: zurück zu den Optionen</p>
+</section>
+
+<!-- Scoreboard -->
+<section class="screen" id="screen-scores" hidden>
+  <h2>SCOREBOARD</h2>
+  <div class="scores" id="scoreList"></div>
+  <div class="btns"><button id="btnScoresBack">Zurück zu den Optionen</button></div>
+  <p class="hint">Beliebige Taste: zurück</p>
+</section>
+
+<!-- Spiel -->
+<section class="screen" id="screen-game" hidden>
+  <canvas id="cv" width="912" height="600"></canvas>
+  <div id="hud">
+    <span>Leben: <b id="hudLeben"></b></span>
+    <span>Gegner: <b id="hudGegner"></b></span>
+    <span>Score: <b id="hudScore"></b></span>
+  </div>
+  <p class="hint">← → bewegen, Leertaste oder ↑ schießen, Esc beenden</p>
+</section>
+
+<!-- Game Over -->
+<section class="screen" id="screen-over" hidden>
+<pre class="art boom">+----------------------------------------------+
+|                                              |
+|              G A M E   O V E R               |
+|             - Schiff zerstört -              |
+|                                              |
+|                                              |
+|                   *   *                      |
+|                *   /|\   *                   |
+|               *   /_X_\   *                  |
+|                * /_/ \_\ *                   |
+|                 /_/___\_\                    |
+|                 [__*_*__]                    |
+|                   /   \                      |
+|                  /_____\                     |
+|                ///     \\\                   |
+|                 * BOOM! *                    |
+|                                              |
+|                                              |
++----------------------------------------------+</pre>
+  <p>Punkteanzahl: <b id="finalScore">0</b></p>
+  <form id="nameForm" autocomplete="off">
+    <p class="sub">Gib deinen Namen ein (1 bis 15 Zeichen)</p>
+    <input id="nameInput" maxlength="15" aria-label="Dein Name">
+    <p class="err" id="nameErr"></p>
+    <div class="btns"><button type="submit">Score speichern</button></div>
+  </form>
+  <div id="savedBox" hidden>
+    <p class="sub">Dein Score ist gespeichert.</p>
+    <div class="btns"><button id="btnToMenu">Zum Hauptmenü (Enter)</button></div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
